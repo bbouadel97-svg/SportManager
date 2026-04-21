@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SportManager.Maui.MainPage"
+             Title="Sport Manager">
+  <VerticalStackLayout Padding="12" Spacing="10">
+    <HorizontalStackLayout Spacing="10">
+      <Button x:Name="BtnCreateTeam" Text="Create Team" />
+      <Button x:Name="BtnCreatePlayer" Text="Create Player" />
+      <Button x:Name="BtnRefresh" Text="Refresh" />
+    </HorizontalStackLayout>
+
+    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto, *">
+      <Label Grid.Column="0" Text="Teams" FontAttributes="Bold"/>
+      <Label Grid.Column="1" Text="Players" FontAttributes="Bold"/>
+
+      <ListView x:Name="TeamsListView" Grid.Column="0" Grid.Row="1" SelectionMode="None" HasUnevenRows="True">
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <ViewCell>
+              <HorizontalStackLayout Padding="8" Spacing="8">
+                <Label Text="{Binding Nom}" VerticalOptions="Center"/> 
+                <Label Text="({Binding Joueurs.Count})" VerticalOptions="Center" TextColor="Gray"/>
+                <Button Text="Edit" Clicked="OnEditTeam" CommandParameter="{Binding Id}" HorizontalOptions="EndAndExpand"/>
+                <Button Text="Delete" Clicked="OnDeleteTeam" CommandParameter="{Binding Id}" />
+              </HorizontalStackLayout>
+            </ViewCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+
+      <ListView x:Name="PlayersListView" Grid.Column="1" Grid.Row="1" SelectionMode="None" HasUnevenRows="True">
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <ViewCell>
+              <HorizontalStackLayout Padding="8" Spacing="8">
+                <VerticalStackLayout>
+                  <Label Text="{Binding Nom}" />
+                  <Label Text="{Binding Age, StringFormat='Age: {0}'}" FontSize="Small" TextColor="Gray" />
+                  <Label Text="{Binding Technique, StringFormat='T: {0} V:{1}'}" IsVisible="False"/>
+                </VerticalStackLayout>
+                <Label Text="{Binding Equipe.Nom}" VerticalOptions="Center" />
+                <Button Text="Edit" Clicked="OnEditPlayer" CommandParameter="{Binding Id}" HorizontalOptions="EndAndExpand"/>
+                <Button Text="Delete" Clicked="OnDeletePlayer" CommandParameter="{Binding Id}" />
+              </HorizontalStackLayout>
+            </ViewCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+    </Grid>
+
+    <HorizontalStackLayout Spacing="8">
+      <Picker x:Name="PickerHome" Title="Home team" HorizontalOptions="FillAndExpand" />
+      <Picker x:Name="PickerAway" Title="Away team" HorizontalOptions="FillAndExpand" />
+      <Button x:Name="BtnSimulate" Text="Simulate" Clicked="OnSimulate" />
+    </HorizontalStackLayout>
+  </VerticalStackLayout>
+</ContentPage>
